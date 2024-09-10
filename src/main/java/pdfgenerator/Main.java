@@ -15,42 +15,46 @@ import java.util.List;
 
 public class Main {
 
+	private static final int COUNT_OPERATIONS = 10;
+	private static final String CARD_NUMBER = "555000001";
+	private static final String START_DATE = "2024-01-01";
+	private static final String END_DATE = "2024-12-12";
+
 	public static void main(String[] args) {
 
-		String cardNumber = "555000001";
-		String startDate = "2024-01-01";
-		String endDate = "2024-12-12";
-		List<Operation> operationList = new ArrayList<>();
+		List<Operation> operationList = generateOperations();
 
-		for (int i = 0; i < 100; i++) {
+		createPdfInvoice(CARD_NUMBER, START_DATE, END_DATE, operationList);
+
+	}
+
+	private static List<Operation> generateOperations() {
+
+		List<Operation> operationList = new ArrayList<>();
+		for (int i = 0; i < Main.COUNT_OPERATIONS; i++) {
 			operationList.add(new Operation());
 		}
 
-		createPdfInvoice(cardNumber, startDate, endDate, operationList);
+		return operationList;
 	}
 
 	public static void createPdfInvoice(String cardNumber, String startDate, String endDate, List<Operation> operations) {
-		try {
-			// Указываем путь к папке, где будет сохранен PDF
-			File directory = new File("src/main/java/pdfgenerator");
 
-			// Проверяем, существует ли папка, если нет, создаем ее
-			if (!directory.exists()) {
-				directory.mkdirs();
-			}
+		File directory = new File("src/main/java/pdfgenerator");
+		if (!directory.exists() && !directory.mkdir()) {
+			throw new RuntimeException("Failed to create directory for PDF generation");
+		}
 
-			// Указываем путь и имя файла
-			File pdfFile = new File(directory, "report.pdf");
+		File pdfFile = new File(directory, "report.pdf");
+		try (FileOutputStream fos = new FileOutputStream(pdfFile)) {
 
-			try (FileOutputStream fos = new FileOutputStream(pdfFile)) {
-				String html = generateHtml(cardNumber, startDate, endDate, operations);
-				HtmlConverter.convertToPdf(html, fos);
-			}
+			String html = generateHtml(cardNumber, startDate, endDate, operations);
+			HtmlConverter.convertToPdf(html, fos);
 
 			System.out.println("PDF файл сохранен в: " + pdfFile.getAbsolutePath());
 
-		} catch (IOException ex) {
-			throw new RuntimeException("Error creating pdf report", ex);
+		} catch (IOException exception) {
+			throw new RuntimeException("Error creating PDF report", exception);
 		}
 	}
 
@@ -60,6 +64,7 @@ public class Main {
 		if (inputStream == null) {
 			throw new IOException("HTML template not found");
 		}
+
 		String htmlTemplate = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
 
 		// Формируем строки для операций
