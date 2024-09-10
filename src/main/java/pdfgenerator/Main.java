@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Main {
 
-	private static final int COUNT_OPERATIONS = 10;
+	private static final int COUNT_OPERATIONS = 15;
 	private static final String CARD_NUMBER = "555000001";
 	private static final String START_DATE = "2024-01-01";
 	private static final String END_DATE = "2024-12-12";
@@ -38,7 +38,10 @@ public class Main {
 		return operationList;
 	}
 
-	public static void createPdfInvoice(String cardNumber, String startDate, String endDate, List<Operation> operations) {
+	public static void createPdfInvoice(String cardNumber,
+	                                    String startDate,
+	                                    String endDate,
+	                                    List<Operation> operations) {
 
 		File directory = new File("src/main/java/pdfgenerator");
 		if (!directory.exists() && !directory.mkdir()) {
@@ -58,7 +61,8 @@ public class Main {
 		}
 	}
 
-	private static String generateHtml(String cardNumber, String startDate, String endDate, List<Operation> operations) throws IOException {
+	private static String generateHtml(String cardNumber, String startDate, String endDate, List<Operation> operations)
+			throws IOException {
 		// Загружаем HTML-шаблон из ресурсов
 		InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("report-template.html");
 		if (inputStream == null) {
@@ -72,12 +76,24 @@ public class Main {
 		double totalAmount = 0;
 		for (Operation operation : operations) {
 			operationsHtml.append("<tr>")
-			              .append("<td>").append(operation.getDate()).append("</td>")
-			              .append("<td>").append(operation.getStation()).append("</td>")
-			              .append("<td>").append(operation.getService()).append("</td>")
-			              .append("<td>").append(operation.getQuantity()).append("</td>")
-			              .append("<td>").append(String.format("%.2f", operation.getPrice())).append("</td>")
-			              .append("<td>").append(String.format("%.2f", operation.getTotal())).append("</td>")
+			              .append("<td>")
+			              .append(operation.getDate())
+			              .append("</td>")
+			              .append("<td>")
+			              .append(operation.getStation())
+			              .append("</td>")
+			              .append("<td>")
+			              .append(operation.getGasStationId())
+			              .append("</td>")
+			              .append("<td>")
+			              .append(operation.getQuantity())
+			              .append("</td>")
+			              .append("<td>")
+			              .append(String.format("%.2f", operation.getPrice()))
+			              .append("</td>")
+			              .append("<td>")
+			              .append(String.format("%.2f", operation.getTotal()))
+			              .append("</td>")
 			              .append("</tr>");
 			totalAmount += operation.getTotal();
 		}
@@ -88,13 +104,12 @@ public class Main {
 
 		// Заменяем плейсхолдеры в шаблоне
 
-		return htmlTemplate
-				.replace("{generatedDate}", generatedDate)
-				.replace("{cardNumber}", cardNumber)
-				.replace("{startDate}", startDate)
-				.replace("{endDate}", endDate)
-				.replace("{operations}", operationsHtml.toString())
-				.replace("{totalAmount}", String.format("%.2f", totalAmount));
+		return htmlTemplate.replace("{generatedDate}", generatedDate)
+		                   .replace("{cardNumber}", cardNumber)
+		                   .replace("{startDate}", startDate)
+		                   .replace("{endDate}", endDate)
+		                   .replace("{operations}", operationsHtml.toString())
+		                   .replace("{totalAmount}", String.format("%.2f", totalAmount));
 	}
 
 	//	public static String createPdfInvoiceBase64(String cardNumber, String startDate, String endDate, List<Operation> operations) {
