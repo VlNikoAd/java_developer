@@ -35,4 +35,4 @@ build/
 ### Project files   ###
 data/
 .idea/
-src/main/java/pdfgenerator/report.pdf
+src/main/java/pdfgenerator/resourse

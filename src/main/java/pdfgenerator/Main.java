@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Main {
 
-	private static final int COUNT_OPERATIONS = 15000;
+	private static final int COUNT_OPERATIONS = 15;
 	private static final String CARD_NUMBER = "555000001";
 	private static final String START_DATE = "2024-01-01";
 	private static final String END_DATE = "2024-12-12";
@@ -43,7 +43,7 @@ public class Main {
 	                                    String endDate,
 	                                    List<Operation> operations) {
 
-		File directory = new File("src/main/java/pdfgenerator");
+		File directory = new File("src/main/java/pdfgenerator/resourse");
 		if (!directory.exists() && !directory.mkdir()) {
 			throw new RuntimeException("Failed to create directory for PDF generation");
 		}
@@ -75,26 +75,14 @@ public class Main {
 		StringBuilder operationsHtml = new StringBuilder();
 		double totalAmount = 0;
 		for (Operation operation : operations) {
-			operationsHtml.append("<tr>")
-			              .append("<td>")
+			operationsHtml
+
 			              .append(operation.getDate())
-			              .append("</td>")
-			              .append("<td>")
 			              .append(operation.getStation())
-			              .append("</td>")
-			              .append("<td>")
 			              .append(operation.getGasStationId())
-			              .append("</td>")
-			              .append("<td>")
 			              .append(operation.getQuantity())
-			              .append("</td>")
-			              .append("<td>")
 			              .append(String.format("%.2f", operation.getPrice()))
-			              .append("</td>")
-			              .append("<td>")
-			              .append(String.format("%.2f", operation.getTotal()))
-			              .append("</td>")
-			              .append("</tr>");
+			              .append(String.format("%.2f", operation.getTotal()));
 			totalAmount += operation.getTotal();
 		}
 
