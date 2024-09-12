@@ -75,14 +75,26 @@ public class Main {
 		StringBuilder operationsHtml = new StringBuilder();
 		double totalAmount = 0;
 		for (Operation operation : operations) {
-			operationsHtml
-
+			operationsHtml.append("<tr>")
+			              .append("<td>")
 			              .append(operation.getDate())
+			              .append("</td>")
+			              .append("<td>")
 			              .append(operation.getStation())
+			              .append("</td>")
+			              .append("<td>")
 			              .append(operation.getGasStationId())
+			              .append("</td>")
+			              .append("<td>")
 			              .append(operation.getQuantity())
+			              .append("</td>")
+			              .append("<td>")
 			              .append(String.format("%.2f", operation.getPrice()))
-			              .append(String.format("%.2f", operation.getTotal()));
+			              .append("</td>")
+			              .append("<td>")
+			              .append(String.format("%.2f", operation.getTotal()))
+			              .append("</td>")
+			              .append("</tr>");
 			totalAmount += operation.getTotal();
 		}
 
