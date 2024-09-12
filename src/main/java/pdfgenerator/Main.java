@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Main {
 
-	private static final int COUNT_OPERATIONS = 15;
+	private static final int COUNT_OPERATIONS = 15000;
 	private static final String CARD_NUMBER = "555000001";
 	private static final String START_DATE = "2024-01-01";
 	private static final String END_DATE = "2024-12-12";
