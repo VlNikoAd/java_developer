@@ -1,7 +1,9 @@
 package javabegin;
 
 import javabegin.character.AbstractCharacter;
+import javabegin.character.AbstractMage;
 import javabegin.character.FireMage;
+import javabegin.character.IceMage;
 import javabegin.character.Warrior;
 import javabegin.employee.AbstractEmployee;
 import javabegin.employee.Administrator;
@@ -22,7 +24,11 @@ public class Main {
 
 
 		AbstractCharacter warrior = new Warrior("Wolf");
-		AbstractCharacter fireMage = new FireMage("Aston");
+		AbstractMage fireMage = new FireMage("Aston");
+		AbstractMage iceMage = new IceMage("Givi");
+
+		fireMage.sayBaseSpell();
+		iceMage.sayBaseSpell();
 
 		System.out.println(warrior.getName());
 		System.out.println(fireMage.getName());
