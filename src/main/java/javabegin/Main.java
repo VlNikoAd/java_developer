@@ -1,5 +1,7 @@
 package javabegin;
 
+import javabegin.character.AbstractCharacter;
+import javabegin.character.Warrior;
 import javabegin.employee.AbstractEmployee;
 import javabegin.employee.Administrator;
 import javabegin.employee.Human;
@@ -16,6 +18,10 @@ public class Main {
 		System.out.println(admin3.getName() + admin3.getSurname() + admin3.getAge());
 
 		admin3.control();
+
+
+		AbstractCharacter warrior = new Warrior("Wolf");
+		System.out.println(warrior.getName());
 
 	}
 }
